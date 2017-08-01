@@ -1,0 +1,47 @@
+<div class="container" ng-controller="UserAccount"  ng-cloak>
+	
+	<div class="row">
+		<div class="col-lg-8 col-lg-offset-2">
+			<div class="row">
+				<div class="col-lg-8">
+					<div class="panel panel-default">
+						<div class="panel-heading">{{lg.h1_account}} <a href="{{url.site_url}}/cabinet/profile"><i class="glyphicon glyphicon-edit pull-right" aria-hidden="true"></i></a></div>
+						<div class="panel-body">
+							<dl class="dl-horizontal">
+								<dt>{{lg.th_email}}</dt><dd>{{user.email}}</dd>
+								<dt>{{lg.th_name}}</dt><dd>{{user.name}}</dd>
+								<dt>{{lg.th_family}}</dt><dd>{{user.family}}</dd>
+								<dt>{{lg.th_date_registration}}</dt><dd>{{user.date}}</dd>
+								<dt>{{lg.th_ip}}</dt><dd>{{user.ip}}</dd>
+								<dt>{{lg.th_country}}</dt><dd>{{user.country}}</dd>
+								<dt>{{lg.th_account_type}}</dt><dd>{{lg.acc_type_personal}}</dd>
+							</dl>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-4">
+					<div class="panel panel-default">
+						<div class="panel-heading">{{lg.label_total_exchange}} </div>
+						<div class="panel-body">
+							<div class="text-center total-exchange">{{user.total_exchange | number:2}} USD</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-8">
+					<div class="panel panel-default">
+						<div class="panel-heading">{{lg.h1_discount_programm}}</div>
+						<div class="panel-body">
+							<dl class="dl-horizontal">
+								<dt>{{lg.label_personal_discount}}</dt><dd>{{user.discount}} %</dd>
+							</dl>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+</div>
+<script src="[TEMPLATE_URL]/js/controllers/user-account.js"></script>

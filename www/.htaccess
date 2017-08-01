@@ -1,0 +1,10 @@
+ErrorDocument 404 http://bm-exchanger.com/404/
+
+RewriteEngine on
+Options -Indexes
+RewriteCond %{SCRIPT_FILENAME} !-d  
+RewriteCond %{SCRIPT_FILENAME} !-f  
+
+RewriteRule ^(.*)$ ./index.php
+AddDefaultCharset UTF-8
+

@@ -1,0 +1,152 @@
+<div class="container" ng-controller="UserAccount" ng-cloak>
+	<div class="row" ng-controller="UserProfile">
+		<div class="col-lg-4" ng-include="'[TEMPLATE_URL]/cabinet/cp-menu.html'"></div>
+		<div class="col-lg-8">
+			<div class="alert alert-success" ng-hide="alert_message.status!='ok'">{{alert_message.message}}</div>
+			<div class="alert alert-danger" ng-hide="alert_message.status!='error'">{{alert_message.error}}</div>
+			
+			<ul class="nav nav-tabs">
+			  <li class="active"><a data-toggle="tab" href="#main">{{lg.h1_main}}</a></li>
+			  <li><a data-toggle="tab" href="#contact">{{lg.h1_contact}}</a></li>
+			  <li><a data-toggle="tab" href="#details">{{lg.h1_details}}</a></li>
+			  <li><a data-toggle="tab" href="#changePassword">{{lg.h1_change_password}}</a></li>
+			</ul>
+			 
+			<div class="tab-content">
+			  <div id="main" class="tab-pane fade in active">
+				<h1>{{lg.h1_profile}}</h1>
+				<div class="row">
+					<div class="col-lg-4">
+						<img src="[SITE_URL]/images/avatars/{{profile.avatar}}" alt="{{profile.family}} {{profile.name}}" id="img_avatar" style="width:100%;" >
+						<button id="upload">{{lg.btn_upload_avatar}}</button>
+					</div>
+					<div class="col-lg-8">
+						<form name="profileForm" class="form">
+							<div class="form-group">
+								<label for="inputName" class="control-label">{{lg.th_name}}:</label>
+								<input type="text" class="form-control" id="inputName" ng-model="profile.name" ng-change="alert_message.status=''" placeholder="{{lg.placeholder_name}}" required>
+							</div>
+							<div class="form-group">
+								<label for="inputFamily" class="control-label">{{lg.th_family}}:</label>
+								<input type="text" class="form-control" id="inputFamily" ng-model="profile.family"  ng-change="alert_message.status=''" placeholder="{{lg.placeholder_family}}" required>
+							</div>
+							<div class="form-group">
+								<label for="inputEmail" class="control-label">{{lg.th_country}}:</label>
+								<select class="form-control" ng-model="profile.country">
+									<!-- <option ng-repeat="country in country_list" ng-selected="country.index==profile.country" ng-value="{{country.index}}">{{country.value}} {{country.index}}</option> -->
+									<option ng-selected="profile.country == country.index" 
+										ng-repeat="country in country_list" 
+										ng-value="country.index">{{country.value}} {{country.index}}</option>
+								</select>
+							</div>
+							<div class="form-group text-center">
+								<button type="submit" class="btn btn-primary" ng-click="change(profile, profileForm)">{{lg.btn_change}}</button>
+							</div>
+						</form>
+					</div>
+				  </div>
+			  </div>
+			  <div id="contact" class="tab-pane fade">
+				<h1>{{lg.h1_contact}}</h1>
+				<form name="contactsForm" class="form">
+					<div class="form-group"> 
+						<label for="inputEmail" class="control-label">{{lg.th_email}}:</label>
+						<input type="email" class="form-control" id="inputEmail" value="{{profile.email}}" disabled >
+					</div>
+					<div class="form-group">
+						<label for="inputPhone" class="control-label">{{lg.th_phone}} <span style="color:Red;">*</span>:</label>
+						<input type="text" class="form-control" id="inputPhone" ng-model="profile.phone" ng-change="alert_message.status=''" placeholder="{{lg.placeholder_phone}}" required >
+					</div>
+					<div class="form-group">
+						<label for="inputSkype" class="control-label">{{lg.th_skype}} <span style="color:Red;">*</span>:</label>
+						<input type="text" class="form-control" id="inputSkype" ng-model="profile.skype"  ng-change="alert_message.status=''" placeholder="{{lg.placeholder_skype}}" required >
+					</div>
+					<div class="form-group">
+						<label for="inputFB" class="control-label">{{lg.th_fb}}:</label>
+						<input type="text" class="form-control" id="inputFB" ng-model="profile.fb"  ng-change="alert_message.status=''" placeholder="{{lg.placeholder_fb}}">
+					</div>
+					<div class="form-group">
+						<label for="inputVK" class="control-label">{{lg.th_vk}}:</label>
+						<input type="text" class="form-control" id="inputVK" ng-model="profile.vk"  ng-change="alert_message.status=''" placeholder="{{lg.placeholder_vk}}">
+					</div>
+					<div class="form-group">
+						<label for="inputLinkedIn" class="control-label">{{lg.th_linkedin}}:</label>
+						<input type="text" class="form-control" id="inputLinkedIn" ng-model="profile.linkedin"  ng-change="alert_message.status=''" placeholder="{{lg.placeholder_linkedin}}">
+					</div>
+					<div class="form-group text-center">
+						<button type="submit" class="btn btn-primary" ng-click="changeContact(profile, contactsForm)">{{lg.btn_change}}</button>
+					</div>
+				</form>
+			  </div>
+			  <div id="details" class="tab-pane fade">
+				<h1>{{lg.h1_details}}</h1>
+				<form name="detailsForm" class="form">
+					<div class="form-group">
+						<label for="inputPM" class="control-label">{{lg.th_pm}} <span style="color:Red;">*</span>:</label>
+						<input type="text" class="form-control" id="inputPM" ng-model="profile.pm" ng-change="alert_message.status=''" placeholder="{{lg.placeholder_pm}}" required >
+					</div>
+					<div class="form-group">
+						<label for="inputADV" class="control-label">{{lg.th_adv}} <span style="color:Red;">*</span>:</label>
+						<input type="text" class="form-control" id="inputADV" ng-model="profile.adv"  ng-change="alert_message.status=''" placeholder="{{lg.placeholder_adv}}" required >
+					</div>
+					<div class="form-group text-center">
+						<button type="submit" class="btn btn-primary" ng-click="changeDetails(profile, detailsForm)">{{lg.btn_change}}</button>
+					</div>
+				</form>
+			  </div>
+			  <div id="changePassword" class="tab-pane fade">
+				<h1>{{lg.h1_change_password}}</h1>
+				<form name="changePassForm" class="form">
+					<div class="form-group">
+						<label for="inputOldPassword" class="control-label">{{lg.label_old_password}}:</label>
+						<input type="password" class="form-control" id="inputOldPassword" ng-model="repass.oldpass" ng-change="alert_message.status=''" placeholder="{{lg.placeholder_old_password}}" required>
+					</div>
+					<div class="form-group">
+						<label for="inputPassword" class="control-label">{{lg.label_password}}:</label>
+						<input type="password" class="form-control" id="inputPassword" ng-model="repass.pass" ng-change="alert_message.status=''" placeholder="{{lg.placeholder_password}}" required>
+					</div>
+					<div class="form-group">
+						<label for="inputPereatPassword" class="control-label">{{lg.label_password_repeat}}:</label>
+						<input type="password" class="form-control" id="inputPereatPassword" ng-model="repass.repeatpass" ng-change="alert_message.status=''" placeholder="{{lg.placeholder_password_repeat}}" data-error="{{lg.error_password}}" required>
+					</div>
+					<div class="form-group text-center">
+						<button type="submit" class="btn btn-primary" ng-click="changePassword(repass, changePassForm)">{{lg.btn_change_password}}</button>
+					</div>
+				</form>
+			  </div>
+			</div>
+		</div>
+		<div id="GetPin" class="modal fade">
+		  <div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					<h4 class="modal-title">Введите PIN отправленный в SMS</h4>
+				</div>
+				<div class="modal-body">
+				  <div class="alert alert-success" ng-hide="alert_pin.status!='smsSent'">{{alert_pin.message}}</div>
+				  <div class="alert alert-danger" ng-hide="alert_pin.status!='error'">{{alert_pin.error}}</div>
+				  <form name="pinForm" class="form-horizontal">
+					  <div class="form-group">
+						<label class="col-xs-4 control-label">PIN:</label>
+						<div class="col-xs-8">
+							<input type="text" class="form-control" ng-model="getpin.pin" value="" maxlength="4" required >
+						</div>
+					  </div>
+				  </form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" ng-click="confirmPhone(getpin, pinForm)">Подтвердить</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+				</div>
+			</div>
+		  </div>
+		</div>
+	</div>
+</div>
+
+
+	
+<script src="[TEMPLATE_URL]/js/controllers/user-account.js"></script>
+<script src="[TEMPLATE_URL]/js/upload-avatar.js"></script>
+<script src="[TEMPLATE_URL]/js/ajaxupload.3.5.js"></script>

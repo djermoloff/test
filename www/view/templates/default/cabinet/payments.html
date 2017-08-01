@@ -1,0 +1,240 @@
+<div class="container" ng-controller="UserAccount"  ng-cloak>
+	<div class="row">
+		<div class="col-lg-4" ng-include="'[TEMPLATE_URL]/cabinet/cp-menu.html'"></div>
+		<div class="col-lg-8">
+			<div class="alert alert-success" ng-hide="alert_message.status!='ok'">{{alert_message.message}}</div>
+			<div class="alert alert-danger" ng-hide="alert_message.status!='error'">{{alert_message.error}}</div>
+			
+			<div class="row">
+				<div class="col-lg-6">
+					<div class="row">
+						<div class="col-lg-8"><i class="glyphicon glyphicon-book" aria-hidden="true"></i> Основной счет:</div>
+						<div class="col-lg-4">{{user.balance}} $</div>
+						<div class="col-lg-6"><a class="btn btn-warning btn-block" href="#Deposit" data-toggle="modal">Пополнить</a></div>
+						<div class="col-lg-6"><a class="btn btn-primary btn-block" href="#Transfer" data-toggle="modal">Перевести</a></div>
+					</div>
+				</div>
+				<div class="col-lg-6">
+					<div class="row">
+						<div class="col-lg-8"><i class="glyphicon glyphicon-book" aria-hidden="true"></i> Партнерский счет:</div>
+						<div class="col-lg-4">{{user.partner_balance}} $</div>
+						<div class="col-lg-6"><a class="btn btn-warning btn-block" href="#Withdrawal" data-toggle="modal">Вывести</a></div>
+						<div class="col-lg-6"><a class="btn btn-primary btn-block" href="#Include" data-toggle="modal">Перевести</a></div>
+					</div>
+				</div>
+			</div>
+			<div class="btn-group " style="margin-bottom: 20px;">
+			  <label class="btn btn-default">
+				<input type="radio" ng-model="search.type" value="" style="display:none;">{{lg.btn_all}}
+			  </label>
+			  <label class="btn btn-default">
+				<input type="radio" ng-model="search.type" value="deposit" style="display:none;">{{lg.btn_payment_payments}}
+			  </label>
+			  <label class="btn btn-default">
+				<input type="radio" ng-model="search.type" value="withdrawal" style="display:none;">{{lg.btn_payment_withdrawal}}
+			  </label>
+			  <label class="btn btn-default">
+				<input type="radio" ng-model="search.type" value="3" style="display:none;">{{lg.btn_payment_receipt}}
+			  </label>
+			  <label class="btn btn-default">
+				<input type="radio" ng-model="search.type" value="4" style="display:none;">{{lg.btn_payment_write_offs}}
+			  </label>
+			  <label class="btn btn-default">
+				<input type="radio" ng-model="search.type" value="5" style="display:none;">{{lg.btn_payment_partners}}
+			  </label>
+			</div>
+			<div class="table-responsive">
+			<table class="table table-striped table-bordered table-hover" ng-controller="UserPayments">
+			 <thead>
+			  <tr>
+				<td>{{lg.th_date}}</td>
+				<td>{{lg.th_type}}</td>
+				<td>{{lg.th_amount}}</td>
+				<td>{{lg.th_status}}</td>
+			  </tr>
+			 </thead>
+			 <tbody>
+			  <tr ng-repeat="payment in payments | filter:search:strict">
+				<td>{{payment.date | date:'yyyy-MM-dd HH:mm'}}</td>
+				<td ng-switch on="payment.type">
+					<span ng-switch-when="deposit">{{lg.btn_payment_payments}}</span>
+					<span ng-switch-when="withdrawal">{{lg.btn_payment_withdrawal}}</span>
+					<span ng-switch-when="include">{{lg.btn_payment_include}}</span>
+				</td>
+				<td>{{payment.amount | number:2}} {{payment.currency}}</td>
+				<td>
+					<i class="glyphicon glyphicon-remove" style="color: red;" aria-hidden="true" ng-if="payment.confirm==0"></i>
+					<i class="glyphicon glyphicon-ok" style="color: Green;" aria-hidden="true" ng-if="payment.confirm==1" ></i>
+				</td>
+			  </tr>
+			 </tbody>
+			</table>
+			</div>
+		</div>
+	</div>
+
+	<div id="Deposit" class="modal fade">
+	  <div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h4 class="modal-title">Пополнить кошелек</h4>
+			</div>
+			<div class="modal-body">
+			  <form name="depositForm" class="form-horizontal">
+				  <div class="form-group">
+					<label for="inputEmail" class="col-xs-4 control-label">Платежная система:</label>
+					<div class="col-xs-8">
+					  <select class="form-control" ng-model="deposit.type" required >
+						<option value="adv" selected>ADV Cash</option>
+						<option value="pm">Perfect Money</option>
+					  </select>
+					</div>
+				  </div>
+				  <div class="form-group">
+					<label for="inputEmail" class="col-xs-4 control-label">Сумма пополнения:</label>
+					<div class="col-xs-8">
+						<div class="input-group">
+							<span class="input-group-addon">$</span>
+							<input type="text" class="form-control" ng-model="deposit.amount" required >
+							<span class="input-group-addon">.00</span>
+						</div>
+					</div>
+				  </div>
+			  </form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" ng-click="deposit(deposit, depositForm)">Пополнить</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+			</div>
+			<div ng-bind-html="deposit.form"></div>
+		</div>
+	  </div>
+	</div>
+	
+	<div id="Include" class="modal fade">
+	  <div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h4 class="modal-title">Перевод на основной счет</h4>
+			</div>
+			<div class="modal-body">
+			  <div class="alert alert-success" ng-hide="alert_include.status!='smsSent'">{{alert_include.message}}</div>
+			  <div class="alert alert-danger" ng-hide="alert_include.status!='error'">{{alert_include.error}}</div>
+			  <form name="includeForm" class="form-horizontal">
+				  <div class="form-group" ng-hide="include.getPin=='getPin'">
+					<label class="col-xs-4 control-label">Сумма перевода:</label>
+					<div class="col-xs-8">
+						<div class="input-group">
+							<span class="input-group-addon">$</span>
+							<input type="text" class="form-control" ng-model="include.amount" required >
+							<span class="input-group-addon">.00</span>
+						</div>
+					</div>
+				  </div>
+				  <div class="form-group" ng-hide="include.getPin!='getPin'">
+					<label class="col-xs-4 control-label">PIN:</label>
+					<div class="col-xs-8">
+						<input type="text" class="form-control" ng-model="include.pin" value="" maxlength="4" style="width:65px;">
+					</div>
+				  </div>
+			  </form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" ng-click="include(include, includeForm)">Переести</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+			</div>
+		</div>
+	  </div>
+	</div>
+	
+	<div id="Transfer" class="modal fade">
+	  <div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h4 class="modal-title">Перевод участнику системы</h4>
+			</div>
+			<div class="modal-body">
+			  <div class="alert alert-success" ng-hide="alert_transfer.status!='smsSent'">{{alert_transfer.message}}</div>
+			  <div class="alert alert-danger" ng-hide="alert_transfer.status!='error'">{{alert_transfer.error}}</div>
+			  <form name="transferForm" class="form-horizontal">
+				  <div class="form-group" ng-hide="transfer.getPin=='getPin'">
+					<label for="inputEmail" class="col-xs-4 control-label">Email участника:</label>
+					<div class="col-xs-8">
+					  <input type="email" class="form-control" ng-model="transfer.email" placeholder="exsamlpe@gmail.com" required>
+					</div>
+				  </div>
+				  <div class="form-group" ng-hide="transfer.getPin=='getPin'">
+					<label class="col-xs-4 control-label">Сумма перевода:</label>
+					<div class="col-xs-8">
+						<div class="input-group">
+							<span class="input-group-addon">$</span>
+							<input type="text" class="form-control" ng-model="transfer.amount" required >
+							<span class="input-group-addon">.00</span>
+						</div>
+					</div>
+				  </div>
+				  <div class="form-group" ng-hide="transfer.getPin!='getPin'">
+					<label class="col-xs-4 control-label">PIN:</label>
+					<div class="col-xs-8">
+						<input type="text" class="form-control" ng-model="transfer.pin" value="" maxlength="4" style="width:65px;">
+					</div>
+				  </div>
+			  </form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" ng-click="transfer(transfer, transferForm)">Перевести</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+			</div>
+		</div>
+	  </div>
+	</div>
+	
+	<div id="Withdrawal" class="modal fade">
+	  <div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h4 class="modal-title">Вывести средства</h4>
+			</div>
+			<div class="modal-body">
+			  <div class="alert alert-success" ng-hide="alert_withdrawal.status!='smsSent'">{{alert_withdrawal.message}}</div>
+			  <div class="alert alert-danger" ng-hide="alert_withdrawal.status!='error'">{{alert_withdrawal.error}}</div>
+			  <form name="withdrawalForm" class="form-horizontal">
+				  <div class="form-group" ng-hide="withdrawal.getPin=='getPin'">
+					<label class="col-xs-4 control-label">Платежная система:</label>
+					<div class="col-xs-8">
+					  <select class="form-control" ng-model="withdrawal.type" required >
+						<option value="adv" selected>ADV Cash</option>
+					  </select>
+					</div>
+				  </div>
+				  <div class="form-group" ng-hide="withdrawal.getPin=='getPin'">
+					<label class="col-xs-4 control-label">Сумма пополнения:</label>
+					<div class="col-xs-8">
+						<div class="input-group">
+							<span class="input-group-addon">$</span>
+							<input type="text" class="form-control" ng-model="withdrawal.amount" required >
+							<span class="input-group-addon">.00</span>
+						</div>
+					</div>
+				  </div>
+				  <div class="form-group" ng-hide="withdrawal.getPin!='getPin'">
+					<label class="col-xs-4 control-label">PIN:</label>
+					<div class="col-xs-8">
+						<input type="text" class="form-control" ng-model="withdrawal.pin" value="" maxlength="4" style="width:65px;">
+					</div>
+				  </div>
+			  </form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" ng-click="withdrawal(withdrawal, withdrawalForm)">Пополнить</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+			</div>
+		</div>
+	  </div>
+	</div>
+</div>
+<script src="[TEMPLATE_URL]/js/controllers/user-account.js"></script>

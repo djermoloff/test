@@ -1,0 +1,17 @@
+	<div class="navbar-header">
+		<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#cp-menu">
+			<span class="sr-only">{{lg.menu_open_navigation]</span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+		</button>
+	</div>
+	<div id="cp-menu">
+		<ul class="nav navbar-nav">
+			<li><a href="{{url.SITE_URL}}/cabinet/home" ng-class="{active: page==''||page=='home'}">{{lg.menu_index}}</a></li>
+			<li><a href="{{url.SITE_URL}}/cabinet/payments" ng-class="{active: page=='payments'}">{{lg.cp_menu_payments}}</a></li>
+			<li><a href="{{url.SITE_URL}}/cabinet/partners" ng-class="{active: page=='partners'}">{{lg.cp_menu_partners}}</a></li>
+			<li><a href="{{url.SITE_URL}}/cabinet/profile" ng-class="{active: page=='profile'}">{{lg.cp_menu_profile}}</a></li>
+			<li><a href="{{url.SITE_URL}}/api/Auth/Logout">{{lg.btn_logout}}</a></li>
+		</ul>
+	</div>

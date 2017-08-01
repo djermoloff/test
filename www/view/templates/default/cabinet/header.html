@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html ng-app="questApp">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+  <script src="[TEMPLATE_URL]/js/app.js"></script>
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  
+  
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="[TEMPLATE_URL]/js/bootstrap.js" ></script>
+
+
+  <title>[page_title]</title>
+  <meta name="description" content="[page_meta_d]"> 
+  <meta name="keywords" content="[page_meta_k]">  
+  
+
+</head>
+
+<body>
+
+<div class="navbar navbar-default">
+	<div class="container">
+	<div class="navbar-header">
+		<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#responsive-menu">
+			<span class="sr-only">[menu_open_navigation]</span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+		</button>
+		<a href="[SITE_URL]" class="navbar-brand"><img src="[TEMPLATE_URL]/images/logo.svg" class="logo" ></a>
+	</div>
+	<div class="collapse navbar-collapse" id="responsive-menu">
+		<ul class="nav navbar-nav">
+			<li><a href="[SITE_URL]">[menu_index]</a></li>
+			<li><a href="[SITE_URL]/news">[menu_news]</a></li>
+			<li><a href="[SITE_URL]/faq">[menu_faq]</a></li>
+			<li><a href="[SITE_URL]/contact">[menu_contact]</a></li>
+		</ul>
+		<ul class="nav navbar-nav navbar-right">
+			<li>
+				<button class="btn btn-primary btn-flag dropdown-toggle" data-toggle="dropdown" >
+					<span class="flag-icon flag-icon-ru"></span> [lang] <span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu flag-menu">
+					<li class="li-flag"><a href="[SITE_URL]/ChangeLang/?lang=en"><span class="flag-icon flag-icon-um"></span> EN</a></li>
+					<li class="li-flag"><a href="[SITE_URL]/ChangeLang/?lang=ru"><span class="flag-icon flag-icon-ru"></span> RU</a></li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+	</div>
+</div>
