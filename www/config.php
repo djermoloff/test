@@ -27,6 +27,7 @@ define('DEFAULT_LANG', 'ru');
 define('USER_HASH_KEY', '3ab7bf51ddf830be02604def50c5b3c8');
 define('USER_AUTH_KEY', 'h1k3452bk23g5jbt23zvm8t84361k32d');
 
+
 $tpl_insert = array("header",
 					"left-bar",
 					"right-bar",
